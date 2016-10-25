@@ -27,8 +27,7 @@ end
 
 mobsbiomes.add_biome = function(self,biomename,def)
 	if biomedefs[biomename] then
-		minetest.log("error","Biome "..biomename.." already exists.")
-		return
+		minetest.log("warning","Redefining biome "..biomename)
 	end
 
 	biomedefs[biomename] = {}
