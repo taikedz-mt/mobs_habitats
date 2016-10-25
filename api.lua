@@ -56,7 +56,7 @@ mobsbiomes.add_spawn = function(self,mobstring,biomestring,def)
 	fulldef.interval = def.interval or 1
 	fulldef.chance = def.chance or 1000
 	fulldef.aoc = def.aoc or 4
-	fulldef.deay_toggle = def.day_toggle
+	fulldef.day_toggle = def.day_toggle
 	fulldef.on_spawn = def.on_spawn
 
 	if not fulldef.nodes or not fulldef.neighbours or not mobstring then
