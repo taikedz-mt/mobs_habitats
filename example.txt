@@ -1,0 +1,34 @@
+-- define a biome in terms of floors, walls, plants and trees
+
+nssm.biome:add("forest",{
+    floors={"default:dirt_with_grass"},
+    walls={"default:dirt","default:stone"},
+    trees={"default:tree","default:aspen"}
+})
+
+nssm.biome:add("ethereal:mushroom",{
+    floors={"ethereal:mushroom_dirt"},
+    walls={"default:dirt","ethereal:mushroom_dirt"},
+    trees={"ethereal:mushroom"},
+    plants={"default:mushroom_red"}
+})
+
+nssm:spawn_family("desert",{
+    sandworm = {spawnon="floor",spawnby="floor",frequency=500},
+    sandblocco = {spawnon="floor",spawnby="wall",frequency=300},
+})
+
+nssm:spawnfamily("air",{
+    scrausics={mobstring="nssm:scrausics",spawnon="air",spawnby="air",frequency=5000,conditions={minlight=15,maxlight=15,minheight=100}},
+    moonheron={mobstring="nssm:moonheron",spawnon="air",spawnby="air",frequency=5000,conditions={minlight=0,maxlight=10,minheight=100}},
+})
+
+-- default types of biomes
+nssm.family["desert"]:add_to_biome("desert") -- sandworms, etc
+nssm.family["air"]:add_to_biome("air") -- scrausics etc
+-- .... etc
+
+-- then these
+if minetest.get_modpath("ethereal") then
+    nssm.family["dungeon"]:add_to_biome("mushroom") --ants etc
+end
