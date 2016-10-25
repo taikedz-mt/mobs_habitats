@@ -6,7 +6,7 @@ mobsbiomes:add_biome("default:grasslands",{
 })
 
 mobsbiomes:add_biome("default:snowymountains",{
-	floors = "default:dirt_with_snow",
+	floors = {"default:dirt_with_snow","default:snow"},
 	plants = "group:flowers",
 	walls = "default:stone",
 })
@@ -23,6 +23,11 @@ mobsbiomes:add_biome("default:savannah",{
 	plants = {"default:dry_grass_1","default:dry_grass_2","default:dry_grass_3","default:dry_grass_4","default:dry_grass_5","default:dry_grass_6","default:dry_grass_7",},
 	trees = "default:acacia_tree",
 	walls = "default:acacia_tree",
+})
+
+mobsbiomes:add_biome("default:icesea",{
+	floors = {"default:ice"},
+	plants = {"default:snow"}, -- snow covering?
 })
 
 -- Maritime
@@ -54,7 +59,7 @@ mobsbiomes:add_biome("default:forest",{
 })
 
 mobsbiomes:add_biome("default:pineforest",{
-	floors = {"default:dirt_with_snow","ethereal:cold_dirt"},
+	floors = {"default:dirt_with_snow","ethereal:cold_dirt","default:snow"},
 	trees = {"default:pine"},
 })
 
