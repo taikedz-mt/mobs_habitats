@@ -1,2 +1,2 @@
-dofile(minetest.get_modpath("mobs_biomes").."/api.lua")
-dofile(minetest.get_modpath("mobs_biomes").."/default_biomes.lua")
+dofile(minetest.get_modpath("mobsbiomes").."/api.lua")
+dofile(minetest.get_modpath("mobsbiomes").."/default_biomes.lua")
