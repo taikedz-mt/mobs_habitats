@@ -1,3 +1,9 @@
+-- Mobs Biomes [mobsbiomes]
+-- (C) 2016 by Tai "DuCake" Kedzierski
+-- Provided to you under the GNU Lesser General Public License v3.0
+-- Please see LICENSE.txt for details
+-- or refer to https://www.gnu.org/licenses/lgpl-3.0.txt
+
 mobsbiomes = {}
 local biomedefs = {}
 local familydefs = {}
