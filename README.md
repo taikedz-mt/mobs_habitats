@@ -42,16 +42,20 @@ Or customize some of them
 
 ## Defining groups of mobs
 
-You can add multiple mobs to named groups
+You can add multiple mobs to named groups - each mob needs a mobstring, and a spawnon and spawnoff value each pointing to "floors","walls","trees", or "plants".
+
+You can customize the spawn parameters too.
 
 	mobsbiomes:add_family("firemonsters",{
-		lavaflan = {mobstring="mobs_monster:lavaflan",spawnon="floors",spawnby="walls"},
-		dungeonmaster = {mobstring="mobs_monster:dungeon_master",spawnon="floors",spawnby="walls",max_light=10},
+		{mobstring="mobs_monster:lavaflan",spawnon="floors",spawnby="walls"},
+
+		{mobstring="mobs_monster:dungeon_master",spawnon="floors",spawnby="walls",max_light=10,chance=2000},
 	})
 
 	mobsbiomes:add_family("groundmonsters",{
-		oerkki = {mobstring="mobs_monster:oerkki",spawnon="floors",spawnby="walls"},
-		stonemonster = {mobstring="mobs_monster:stone_monster",spawnon="floors",spawnby="walls"},
+		{mobstring="mobs_monster:oerkki",spawnon="floors",spawnby="walls"},
+
+		{mobstring="mobs_monster:stone_monster",spawnon="floors",spawnby="walls"},
 	})
 
 And spawn named groups to biomes:
