@@ -42,7 +42,7 @@ Or customize some of them
 
 ## Defining groups of mobs
 
-You can add multiple mobs to named groups - each mob needs a mobstring, and a spawnon and spawnoff value each pointing to "floors","walls","trees", or "plants".
+You can add multiple mobs to named groups - each mob needs a mobstring, and a `spawnon` and `spawnby` value each pointing to "floors","walls","trees", or "plants".
 
 You can customize the spawn parameters too.
 
