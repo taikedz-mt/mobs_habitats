@@ -1,1 +1,4 @@
-Source cocde is licensed under LGPLv3
+Mobs Biomes
+(C) 2016 Tai "DuCake" Kedzierski
+
+Source code is licensed under LGPLv3
