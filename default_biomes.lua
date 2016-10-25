@@ -32,18 +32,18 @@ mobsbiomes:add_biome("default:icesea",{
 
 -- Maritime
 
-mobsbiomes:add_biomes("default:shore",{
+mobsbiomes:add_biome("default:shore",{
 	floors = "default:sand",
 })
 
-mobsbiomes:add_biomes("default:sea",{
+mobsbiomes:add_biome("default:sea",{
 	floors = "default:water_source",
 	plants = "default:water_source",
 	walls = "default:water_source",
 	trees = "default:water_source",
 })
 
-mobsbiomes:add_biomes("default:seabed",{
+mobsbiomes:add_biome("default:seabed",{
 	floors = {"default:sand","default:dirt","default:clay"},
 	plants = "default:water_source",
 	walls = "default:water_source",
