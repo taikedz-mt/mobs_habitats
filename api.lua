@@ -1,11 +1,11 @@
--- Mobs Biomes [mobsbiomes]
+-- Mobs Biomes [mobshabitats]
 -- (C) 2016 by Tai "DuCake" Kedzierski
 -- Provided to you under the GNU Lesser General Public License v3.0
 -- Please see LICENSE.txt for details
 -- or refer to https://www.gnu.org/licenses/lgpl-3.0.txt
 
-mobsbiomes = {}
-local biomedefs = {}
+mobshabitats = {}
+local habitatdefs = {}
 local familydefs = {}
 
 local tablecopy = function(mytable)
@@ -21,21 +21,21 @@ local formatcheck = function(input)
 	elseif type(input) == "nil" then
 		return {"air"}
 	else
-		minetest.log("error","Bad biome property definition")
+		minetest.log("error","Bad habitat property definition")
 	end
 end
 
-mobsbiomes.add_biome = function(self,biomename,def)
-	if biomedefs[biomename] then
-		minetest.log("warning","Redefining biome "..biomename)
+mobshabitats.add_habitat = function(self,habitatname,def)
+	if habitatdefs[habitatname] then
+		minetest.log("warning","Redefining habitat "..habitatname)
 	end
 
-	biomedefs[biomename] = {}
+	habitatdefs[habitatname] = {}
 
-	biomedefs[biomename].floors = formatcheck(def.floors)
-	biomedefs[biomename].walls = formatcheck(def.walls)
-	biomedefs[biomename].trees = formatcheck(def.trees)
-	biomedefs[biomename].plants = formatcheck(def.plants)
+	habitatdefs[habitatname].floors = formatcheck(def.floors)
+	habitatdefs[habitatname].walls = formatcheck(def.walls)
+	habitatdefs[habitatname].trees = formatcheck(def.trees)
+	habitatdefs[habitatname].plants = formatcheck(def.plants)
 end
 
 -- from -- Mobs Api (9th October 2016)
@@ -43,12 +43,12 @@ end
 --        interval, chance, aoc, min_height, max_height, day_toggle, on_spawn)
 
 
-mobsbiomes.add_spawn = function(self,mobstring,biomestring,def)
+mobshabitats.add_spawn = function(self,mobstring,habitatstring,def)
 	local fulldef = {}
 	if def == nil then def = {} end
-	--minetest.debug("Using biome definition "..dump(biomedefs[biomestring]))
-	fulldef.nodes = biomedefs[biomestring][def.spawnon]
-	fulldef.neighbours = biomedefs[biomestring][def.spawnby]
+	--minetest.debug("Using habitat definition "..dump(habitatdefs[habitatstring]))
+	fulldef.nodes = habitatdefs[habitatstring][def.spawnon]
+	fulldef.neighbours = habitatdefs[habitatstring][def.spawnby]
 	fulldef.min_light = def.min_light or 0
 	fulldef.max_light = def.max_light or 20
 	fulldef.min_height = def.min_height or -31000
@@ -60,7 +60,7 @@ mobsbiomes.add_spawn = function(self,mobstring,biomestring,def)
 	fulldef.on_spawn = def.on_spawn
 
 	if not fulldef.nodes or not fulldef.neighbours or not mobstring then
-		minetest.log("error","Invalid biome spawning for "..tostring(mobstring).." into "..tostring(biomestring) )
+		minetest.log("error","Invalid habitat spawning for "..tostring(mobstring).." into "..tostring(habitatstring) )
 		return
 	end
 
@@ -80,7 +80,7 @@ mobsbiomes.add_spawn = function(self,mobstring,biomestring,def)
 	)
 end
 
-mobsbiomes.add_family = function(self,familyname,deflist)
+mobshabitats.add_family = function(self,familyname,deflist)
 	familydefs[familyname] = {}
 	--minetest.debug("Processing family "..familyname)
 
@@ -94,10 +94,10 @@ mobsbiomes.add_family = function(self,familyname,deflist)
 	end -- deflist
 end
 
-mobsbiomes.add_family_spawn = function(self,familyname,biomename)
+mobshabitats.add_family_spawn = function(self,familyname,habitatname)
 	local family = familydefs[familyname]
 	--minetest.debug("Spawning "..dump(family))
 	for mob,mobdef in pairs(family) do
-		self:add_spawn(mobdef.mobstring,biomename,mobdef)
+		self:add_spawn(mobdef.mobstring,habitatname,mobdef)
 	end
 end
