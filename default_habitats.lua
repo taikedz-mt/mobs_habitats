@@ -50,6 +50,22 @@ mobshabitats:add_habitat("default:seabed",{
 	trees = "default:water_source",
 })
 
+-- Rivers
+
+mobshabitats:add_habitat("default:river",{
+	floors = {"default:river_water_source", "default:river_water_flowing"},
+	plants = {"default:river_water_source", "default:river_water_flowing"},
+	walls = {"default:river_water_source", "default:river_water_flowing"},
+	trees = {"default:river_water_source", "default:river_water_flowing"},
+})
+
+mobshabitats:add_habitat("default:riverbed",{
+	floors = {"default:dirt", "default:stone", "default:sand"},
+	plants = {"default:river_water_source", "default:river_water_flowing"},
+	walls = {"default:river_water_source", "default:river_water_flowing"},
+	trees = {"default:river_water_source", "default:river_water_flowing"},
+})
+
 -- Forest types
 
 mobshabitats:add_habitat("default:forest",{
@@ -82,6 +98,10 @@ mobshabitats:add_habitat("default:tallcaves",{ -- typically should spawn on floo
 mobshabitats:add_habitat("default:dungeon",{
 	floors = {"default:cobble","default:mossycobble"},
 	walls = {"default:cobble","default:mossycobble"},
+})
+
+mobshabitats:add_habitat("default:lavapit",{
+	floors = {"default:lava_source","default:lava_flowing"}
 })
 
 -- Sky
