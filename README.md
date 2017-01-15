@@ -113,9 +113,14 @@ For most mobs, having a chance value of 2048 - 4096 will equate to roughly a 1-i
 
 So
 
-	mobshabitat:add_spawn("mobs_animal:bunny", "default:grasslands", {spawnon="floors", spawnby="floors", interval=5, chance=5*4096})
+	mobshabitat:add_spawn("mobs_animal:bunny", "default:grasslands",
+		{spawnon="floors", spawnby="floors", interval=5,
+		chance = 5 * 4096 -- <<===
+		})
 
 will run every 5 seconds, and on each run there will be roughly a 1-in-5 chance of a rabbit spawning somehwere within the active block range of a player. We use 4096 as the upper limit of what roughly would equate to 1-in-1 chance.
+
+Prefer thus to express the chance as a `n * 4096` number when using mobshabitats - the API itself will adjust for the active block range.
 
 ### Reasoning
 
