@@ -45,16 +45,21 @@ end
 
 mobshabitats.add_spawn = function(self,mobstring,habitatstring,def)
 	local fulldef = {}
+	local habdef = habitatdefs[habitatstring]
+	if not habdef then
+		minetest.log("error", "No such habitat "..habitatstring.." for "..mobstring)
+		return
+	end
 	if def == nil then def = {} end
-	--minetest.debug("Using habitat definition "..dump(habitatdefs[habitatstring]))
-	fulldef.nodes = habitatdefs[habitatstring][def.spawnon]
-	fulldef.neighbours = habitatdefs[habitatstring][def.spawnby]
+
+	fulldef.nodes = habdef[def.spawnon] or "air"
+	fulldef.neighbours = habdef[def.spawnby] or "air"
 	fulldef.min_light = def.min_light or 0
 	fulldef.max_light = def.max_light or 20
 	fulldef.min_height = def.min_height or -31000
 	fulldef.max_height = def.max_height or 31000
-	fulldef.interval = def.interval or 1
-	fulldef.chance = def.chance or 1000
+	fulldef.interval = def.interval or 10
+	fulldef.chance = def.chance or 100000
 	fulldef.aoc = def.aoc or 4
 	fulldef.day_toggle = def.day_toggle
 	fulldef.on_spawn = def.on_spawn
