@@ -32,19 +32,17 @@ We can add outlandish habitats too:
 
 ## Adding mobs to habitats
 
-You can add mobs to habitats using the default spawn values
+You can add mobs to habitats using the default spawn values - each mob needs a mobstring, and a `spawnon` and `spawnby` value each pointing to "floors","walls","trees", or "plants".
 
-	mobshabitats:add_spawn("dmobs:panda","ethereal:bamboo")
+	mobshabitats:add_spawn("dmobs:panda","ethereal:bamboo", {spawnon="floors", spawnby="trees"})
 
 Or customize some of them
 
-	mobshabitats:add_spawn("mobs_monster:dirtmonster","default:grasslands",{max_light=8})
+	mobshabitats:add_spawn("mobs_monster:dirtmonster","default:grasslands",{spawnon="floors",spawnby="walls", max_light=8})
 
 ## Defining groups of mobs
 
-You can add multiple mobs to named groups - each mob needs a mobstring, and a `spawnon` and `spawnby` value each pointing to "floors","walls","trees", or "plants".
-
-You can customize the spawn parameters too.
+You can add multiple mobs to named groups, and customize the spawn parameters too.
 
 	mobshabitats:add_family("firemonsters",{
 		{mobstring="mobs_monster:lavaflan",spawnon="floors",spawnby="walls"},
@@ -74,12 +72,16 @@ And spawn named groups to habitats:
   * default:shore
   * default:sea
   * default:seabed
+  * default:river
+  * default:riverbed
+  * default:seabed
   * default:forest
   * default:pineforest
   * default:jungle
   * default:caves
   * default:tallcaves
   * default:dungeon
+  * default:lavapit
   * default:sky 
 
 ## Predefined spawn values
@@ -90,9 +92,43 @@ You can override any of the predefined spawn values by providing the correspondi
 	max_light       = 20
 	min_height      = -31000
 	max_height      = 31000
-	interval        = 1                 (how frequently to try)
-	chance          = 1000              (the inverse chance of the spawn occurring)
+	interval        = 10                (how frequently to try)
+	chance          = 100000            (the inverse chance of the spawn occurring)
 	aoc             = 4                 (max entities in area, "active object count")
 	day_toggle      = nil               (1= day only, 0= night-only, nil=anytime)
 	on_spawn        = nil               (should be a function)
 
+## Calculating Chance
+
+The chance of a mob appearing depends on:
+
+* how common the blocks are in the neighbouring environs
+* the `active_block_range`
+
+The chance parameter in `mobshabitats` takes these heuristics into account, so that when the *abr* scales up, so do the spawn chances.
+
+To make the spawning work better regardless of what the Active Block Range is set to, the `chance` parameter should be based on an abr of 1, that is, for any given player, there are only 4096 currently active blocks on which ABMs will run.
+
+For most mobs, having a chance value of 2048 - 4096 will equate to roughly a 1-in-1 chance of a mob spawning at every iteration of the ABM (as set in `interval`).
+
+So
+
+	mobshabitat:add_spawn("mobs_animal:bunny", "default:grasslands", {spawnon="floors", spawnby="floors", interval=5, chance=5*4096})
+
+will run every 5 seconds, and on each run there will be roughly a 1-in-5 chance of a rabbit spawning somehwere within the active block range of a player. We use 4096 as the upper limit of what roughly would equate to 1-in-1 chance.
+
+### Reasoning
+
+A "map block" consists of 16 x 16 x 16 nodes.
+
+If the active block range is set to `1` then only the immediate block in which the player is will run ABMs.
+
+If the *abr* is set to `2`, then the current block, plus everything within a radius of 1 from the player, will run their ABMs -- that is, a `(3 * 16) ^3 = 110592` number of blocks.
+
+If the *abr* is set to `3` (the default), then that is raised to `(5 * 16) ^ 3 = 512000`
+
+These numbers rack up pretty fast - a geometric exponential compounding.
+
+If you consider spawning a bird, in the air, and the player is standing on the ground, then it is likely only half the space is filled with air. In the case of an *abr* set to `3`, we have `512000 / 2 = 256000`. This means that the chance of spawning a bird when the `spawnon` is air and the `spawnby` is air should be set to 256000 if you want a bird to spawn anywhere a player is (1 in 1 chance)! Needless to say, when spawning aerial monsters, this needs number nees to be set very high.
+
+A similar rule applies at sea for spawning sea mobs.

@@ -7,6 +7,13 @@
 mobshabitats = {}
 local habitatdefs = {}
 local familydefs = {}
+local mt_abr = tonumber(minetest.setting_get("active_block_range") ) or 3 -- 3 is the default as described in minetest.conf.example
+
+-- If a chance is provided based on ABR = 1, this translates the chance to the corresponding ABR
+-- Chance 4096 means an air mobs is likely to spawn once in range of player at ABR=1, but 3 times if ABR=2
+local function abr_chance(chance)
+	return math.floor( chance * math.pow( (32*mt_abr - 16) , 3 ) / 4096 )
+end
 
 local tablecopy = function(mytable)
 	-- need to define this, make a deep copy
@@ -59,10 +66,14 @@ mobshabitats.add_spawn = function(self,mobstring,habitatstring,def)
 	fulldef.min_height = def.min_height or -31000
 	fulldef.max_height = def.max_height or 31000
 	fulldef.interval = def.interval or 10
-	fulldef.chance = def.chance or 100000
 	fulldef.aoc = def.aoc or 4
 	fulldef.day_toggle = def.day_toggle
 	fulldef.on_spawn = def.on_spawn
+
+	-- Chance - modders should specify to the consideration of 1 block's worth
+	-- We will scale it here according to the active_block_range setting
+	fulldef.chance = def.chance or 100000
+	fulldef.chance = abr_chance( fulldef.chance )
 
 	if not fulldef.nodes or not fulldef.neighbours or not mobstring then
 		minetest.log("error","Invalid habitat spawning for "..tostring(mobstring).." into "..tostring(habitatstring) )
