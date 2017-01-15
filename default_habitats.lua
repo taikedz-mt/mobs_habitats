@@ -1,8 +1,23 @@
+local function variant(base, variations, append)
+	local newitems = {}
+	if not append then append = {} end
+
+	for _,v in pairs(append) do
+		newitems[#newitems+1] = v
+	end
+
+	for _,v in pairs(variations) do
+		newitems[#newitems+1] = base..v
+	end
+
+	return newitems
+end
+
 -- Main land
 
 mobshabitats:add_habitat("default:grasslands",{
 	floors = {"default:dirt_with_grass","ethereal:green_dirt"},
-	plants = {"group:flowers","default:grass_1","default:grass_2","default:grass_3","default:grass_4","default:grass_5","default:grass_6","default:grass_7",},
+	plants = variant("default:grass_", {1,2,3,4,5,6,7}, {"group:flowers"}),
 })
 
 mobshabitats:add_habitat("default:snowymountains",{
@@ -20,7 +35,7 @@ mobshabitats:add_habitat("default:desert",{
 
 mobshabitats:add_habitat("default:savannah",{
 	floors = "default:dirt_with_dry_grass",
-	plants = {"default:dry_grass_1","default:dry_grass_2","default:dry_grass_3","default:dry_grass_4","default:dry_grass_5","default:dry_grass_6","default:dry_grass_7",},
+	plants = variant("default:dry_grass_", {1,2,3,4,5,6,7}),
 	trees = "default:acacia_tree",
 	walls = "default:acacia_tree",
 })
@@ -34,6 +49,8 @@ mobshabitats:add_habitat("default:icesea",{
 
 mobshabitats:add_habitat("default:shore",{
 	floors = "default:sand",
+	walls = {"default:dirt_with_grass", "default:dirt_with_snow", "default:dirt"},
+	plants = variant("default:grass_", {1,2,3,4,5,6,7}),
 })
 
 mobshabitats:add_habitat("default:sea",{
@@ -77,11 +94,13 @@ mobshabitats:add_habitat("default:forest",{
 mobshabitats:add_habitat("default:pineforest",{
 	floors = {"default:dirt_with_snow","ethereal:cold_dirt","default:snow"},
 	trees = {"default:pine"},
+	plants = {"default:grass"},
 })
 
 mobshabitats:add_habitat("default:jungle",{
 	floors = {"default:dirt_with_grass","ethereal:jungle_dirt"},
 	trees = {"default:jungletree"},
+	plants = {"default:junglegrass"},
 })
 
 -- Underground
@@ -96,8 +115,9 @@ mobshabitats:add_habitat("default:tallcaves",{ -- typically should spawn on floo
 })
 
 mobshabitats:add_habitat("default:dungeon",{
-	floors = {"default:cobble","default:mossycobble"},
-	walls = {"default:cobble","default:mossycobble"},
+	floors = {"default:cobble","default:mossycobble", "default:sandstonebrick"},
+	walls = {"default:cobble","default:mossycobble", "default:sandstonebrick"},
+	plants = {"default:torch"}, -- when player starts placing torches ;-)
 })
 
 mobshabitats:add_habitat("default:lavapit",{
