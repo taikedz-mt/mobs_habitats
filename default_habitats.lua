@@ -17,13 +17,13 @@ end
 
 mobshabitats:add_habitat("default:grasslands",{
 	floors = {"default:dirt_with_grass","ethereal:green_dirt"},
-	plants = variant("default:grass_", {1,2,3,4,5,6,7}, {"group:flowers"}),
+	plants = variant("default:grass_", {1,2,3,4,5,6,7}, {"group:flower"}),
 })
 
 mobshabitats:add_habitat("default:snowymountains",{
-	floors = {"default:dirt_with_snow","default:snow"},
-	plants = "group:flowers",
-	walls = "default:stone",
+	floors = {"default:dirt_with_snow","default:snow","default:snowblock"},
+	plants = "group:flower",
+	walls = {"default:stone","default:dirt_with_snow"},
 })
 
 mobshabitats:add_habitat("default:desert",{
@@ -87,7 +87,7 @@ mobshabitats:add_habitat("default:riverbed",{
 
 mobshabitats:add_habitat("default:forest",{
 	floors = {"default:dirt_with_grass","ethereal:green_dirt"},
-	plants = {"group:flowers"},
+	plants = {"group:flower"},
 	trees = {"default:tree","default:aspen"},
 })
 
@@ -106,12 +106,12 @@ mobshabitats:add_habitat("default:jungle",{
 -- Underground
 
 mobshabitats:add_habitat("default:caves",{
-	floors = {"default:stone","default:gravel","default:sandstone"},
-	walls = {"default:stone","default:gravel","default:sandstone"},
+	floors = {"default:stone","default:desert_stone","default:gravel","default:sandstone"},
+	walls = {"default:stone","default:desert_stone","default:gravel","default:sandstone"},
 })
 
 mobshabitats:add_habitat("default:tallcaves",{ -- typically should spawn on floor... which here is air.
-	walls = {"default:stone","default:gravel","default:sandstone"},
+	walls = {"default:stone","default:desert_stone","default:gravel","default:sandstone"},
 })
 
 mobshabitats:add_habitat("default:dungeon",{
