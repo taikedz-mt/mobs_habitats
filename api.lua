@@ -9,15 +9,20 @@ local habitatdefs = {}
 local familydefs = {}
 local mt_abr = tonumber(minetest.setting_get("active_block_range") ) or 3 -- 3 is the default as described in minetest.conf.example
 
--- If a chance is provided based on ABR = 1, this translates the chance to the corresponding ABR
--- Chance 4096 means an air mobs is likely to spawn once in range of player at ABR=1, but 3 times if ABR=2
-local function abr_chance(chance)
-	return math.floor( chance * math.pow( (32*mt_abr - 16) , 3 ) / 4096 )
+-- abr_chance() : calculate a chance based on the actual ABR
+-- a raw chance of 4096 supplied to the ABM means an air mobs is likely to spawn once in range of player at ABR=1, but 2 times if ABR=2
+-- So, we derive from that chance a new chance based on the currently set active_block_range
+-- abr1chance is a chance based on ABR = 1 - if all mobs using this library specify on a basis of ABR=1
+-- this function scales this up as necessary
+local function abr_chance(abr1chance)
+	local normalizer = 4096 -- The value for a 1/1 chance at ABR=1
+	local effective_abr_chance = math.pow( (mt_abr*16) , 3 )
+	return math.floor( (abr1chance / normalizer) * effective_abr_chance )
 end
 
 local tablecopy = function(mytable)
 	-- need to define this, make a deep copy
-	return mytable
+	return table.copy(mytable)
 end
 
 local formatcheck = function(input)

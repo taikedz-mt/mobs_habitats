@@ -128,12 +128,11 @@ A "map block" consists of 16 x 16 x 16 nodes.
 
 If the active block range is set to `1` then only the immediate block in which the player is will run ABMs.
 
-If the *abr* is set to `2`, then the current block, plus everything within a radius of 1 from the player, will run their ABMs -- that is, a `(3 * 16) ^3 = 110592` number of blocks.
+If the *abr* is set to `2`, everything within a radius of 2 blocks from the player will run their ABMs -- that is, a `(2 * 16) ^3 = 3276` number of blocks.
 
-If the *abr* is set to `3` (the default), then that is raised to `(5 * 16) ^ 3 = 512000`
+If the *abr* is set to `3` (the default), then that is raised to `(3 * 16) ^ 3 = 110592`
 
-These numbers rack up pretty fast - a geometric exponential compounding.
+These numbers rack up pretty fast - a geometric progression copmounded by an exponential.
 
-If you consider spawning a bird, in the air, and the player is standing on the ground, then it is likely only half the space is filled with air. In the case of an *abr* set to `3`, we have `512000 / 2 = 256000`. This means that the chance of spawning a bird when the `spawnon` is air and the `spawnby` is air should be set to 256000 if you want a bird to spawn anywhere a player is (1 in 1 chance)! Needless to say, when spawning aerial monsters, this needs number nees to be set very high.
+If you consider spawning a bird, in the air, and the player is standing on the ground, then it is likely only half the space is filled with air. In the case of an *abr* set to `3`, we have `110592 / 2 = 55296`. This means that the chance of spawning a bird (when the `spawnon` is air and the `spawnby` is air) should be set to `55296` (or, `(abr * 16)^3 / 2`), if you want a bird to spawn anywhere a player is located (that is, a 1 in 1 chance); but if you change your ABR to `1` then this needs to be reduced to `4096`.
 
-A similar rule applies at sea for spawning sea mobs.
